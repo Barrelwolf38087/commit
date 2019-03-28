@@ -1,0 +1,37 @@
+name: Commit
+main: tk.barrelwolf.Commit
+author: Barrelwolf38087
+version: 1.0
+commands:
+  commit:
+    description: Get a random commit message
+    permission: commit.commit
+    permission-message: "You do not have permission to do this!"
+    usage: "Usage: /commit"
+  addcommit:
+    description: Add a commit to the list
+    permission: commit.add
+    permission-message: "You do not have permission to do this!"
+    usage: "Usage: /addcommit <message>"
+  clearcommits:
+    description: Clear the list of commits
+    permission: commit.clear
+    permission-message: "You do not have permission to do this!"
+    usage: "Usage: /clearcommits"
+
+permissions:
+  commit.*:
+    description: Allows a user to use all commit commands
+    children:
+      commit: true
+      commit.add: true
+      commit.clear: true
+  commit:
+    description: Allows a user to run /commit
+    default: true
+  commit.add:
+    description: Allows a user to add a commit message to the list
+    default: op
+  commit.clear:
+    description: Allows a user to clear the list of commit messages
+    default: op
