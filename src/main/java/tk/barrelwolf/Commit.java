@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class Commit extends JavaPlugin {
 
@@ -49,6 +48,7 @@ public class Commit extends JavaPlugin {
         logger.info("Loading commits from \"" + urlInConfigFile + "\"");
         try {
             defaultCommitListURL = new URL(urlInConfigFile);
+            
 
         } catch (MalformedURLException e) {
             logger.warning("Error: Malformed URL \"" + urlInConfigFile + "\", ignoring...");
