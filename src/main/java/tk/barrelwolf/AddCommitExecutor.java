@@ -14,14 +14,12 @@ public class AddCommitExecutor implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("addcommit")) {
             if (args.length != 0) {
-
                 String argString = String.join(" ", args);
 
-                sender.sendMessage(argString);
-                // plugin.addCommit(args[1]);
+                plugin.addCommit(argString);
                 return true;
             } else {
-                sender.sendMessage("&4Error: wrong number of arguments");
+                sender.sendMessage("Error: wrong number of arguments");
                 return false;
             }
         }

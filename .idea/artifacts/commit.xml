@@ -4,8 +4,8 @@
     <root id="archive" name="commit.jar">
       <element id="module-output" name="commit" />
       <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jsoup/jsoup/1.11.3/jsoup-1.11.3.jar" path-in-jar="/" />
       <element id="file-copy" path="$PROJECT_DIR$/config.yml" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/mashape/unirest/unirest-java/1.4.9/unirest-java-1.4.9.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

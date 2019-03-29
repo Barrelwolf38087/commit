@@ -1,7 +1,11 @@
 package tk.barrelwolf;
 
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -48,12 +52,15 @@ public class Commit extends JavaPlugin {
         String urlInConfigFile = this.getConfig().getString("defaultCommitListURL");
         logger.info("Loading commits from \"" + urlInConfigFile + "\"");
         try {
-            defaultCommitListURL = new URL(urlInConfigFile);
+            logger.info("Got here!");
+            String data = Unirest.get(urlInConfigFile).getBody().toString();
+            for (String line : data.split("\n")) {
 
-        } catch (MalformedURLException e) {
-            logger.warning("Error: Malformed URL \"" + urlInConfigFile + "\", ignoring...");
+                commits.add(line);
+            }
+            logger.info("Got here as well!");
         } catch (NullPointerException e) {
-
+            logger.info("That's a null!");
         }
     }
 
