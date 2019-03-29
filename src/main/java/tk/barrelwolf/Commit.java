@@ -1,21 +1,16 @@
 package tk.barrelwolf;
 
 import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public class Commit extends JavaPlugin {
 
-    private URL defaultCommitListURL;
+    private String defaultCommitListURL = null;
     private Logger logger = getLogger();
 
     private static List<String> commits;
@@ -34,8 +29,18 @@ public class Commit extends JavaPlugin {
         updateConfig();
     }
 
-    public void loadDefaultCommits() {
-
+    public void loadCommits(String url) {
+        logger.info("Loading commits from \"" + url + "\"");
+        try {
+            logger.info("Got here!");
+            String data = Unirest.get(url).getBody().toString();
+            for (String line : data.split("\n")) {
+                commits.add(line);
+            }
+            logger.info("Got here as well!");
+        } catch (NullPointerException e) {
+            logger.info("That's a null!");
+        }
     }
 
     @Override
@@ -46,26 +51,26 @@ public class Commit extends JavaPlugin {
         this.getCommand("clearcommits").setExecutor(new ClearCommitsExecutor(this));
 
         // Add commits from the config file
+        logger.info("Loading local commits...");
         commits = this.getConfig().getStringList("commits");
 
         // Add commits from the URL in the config file
-        String urlInConfigFile = this.getConfig().getString("defaultCommitListURL");
-        logger.info("Loading commits from \"" + urlInConfigFile + "\"");
-        try {
-            logger.info("Got here!");
-            String data = Unirest.get(urlInConfigFile).getBody().toString();
-            for (String line : data.split("\n")) {
+        logger.info("Loading remote commits...");
+        List<String> configFileURLs = this.getConfig().getStringList("remoteCommitURLs");
 
-                commits.add(line);
-            }
-            logger.info("Got here as well!");
-        } catch (NullPointerException e) {
-            logger.info("That's a null!");
+        if (configFileURLs.isEmpty()) {
+            logger.info("No remote commits specified");
+            return;
+        }
+
+        for (String url : configFileURLs) {
+            loadCommits(url);
         }
     }
 
     @Override
     public void onDisable() {
+        updateConfig();
         this.saveConfig();
     }
 

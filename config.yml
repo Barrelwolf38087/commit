@@ -3,4 +3,5 @@
 # these will be appended to commits.
 commits:
   - "Hello, World!"
-defaultCommitListURL: "https://raw.githubusercontent.com/ngerakines/commitment/master/commit_messages.txt"
+remoteCommitURLs:
+  - "https://raw.githubusercontent.com/ngerakines/commitment/master/commit_messages.txt"
